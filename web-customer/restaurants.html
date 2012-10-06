@@ -1,1 +1,1 @@
-<div data-role="header"><h1>Eat Now</h1></div><div data-role="content"><ul data-role="listview" data-filter="true"><li><a href="#orders">Rest 1</a></li><li><a href="#orders">Rest 2</a></li><li><a href="#orders">Rest 3</a></li></ul></div><div data-role="footer"><h4>Footer</h4></div>
+<div data-role="header"><h1>Eat Now</h1></div><div data-role="content"><ul data-role="listview" data-filter="true"><li ng-repeat="restuarant in restaurants"><a href="#orders" ng-click="startOrder(restuarant)">{{restuarant.name}}</a></li></ul></div><div data-role="footer"><h4>Footer</h4></div>

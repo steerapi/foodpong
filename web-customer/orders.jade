@@ -1,18 +1,17 @@
 div(data-role='header')
   h1 Order
-div(data-role='content')
-  | Time Left: Discount: 
-  | Time Date
+div(data-role='content').center-wrapper
+  h1 {{currentRestaurant.name}}
+  | Time Left: {{timeleft}} Discount: {{discount}}
+  | {{time}} {{date}}
   div(data-role='fieldcontain')
+    h1 Choose as many items as you'd like:
+    fieldset(data-role='controlgroup',ng-repeat="(name,price) in currentRestaurant.menu")
+      input(ng-change="calculateTotal()",id="checkbox{{$index}}",type='checkbox', ng-model="checks[name]")
+      label(for="checkbox{{$index}}")
+        | {{name}} ${{price}}
     fieldset(data-role='controlgroup')
-      legend Choose as many items as you'd like:
-      input#checkbox-1(type='checkbox', name='checkbox-1')
-      label(for='checkbox-1') Item 1
-      input#checkbox-2(type='checkbox', name='checkbox-2')
-      label(for='checkbox-2') Item 2
-    fieldset(data-role='controlgroup')
-      legend Total
-      a(data-role='button').ui-disabled.text-align-right 20
+      a(data-role='button').ui-disabled.text-align-right ${{total}}
   a(href="#confirm",data-role='button')
     | Order Now
 

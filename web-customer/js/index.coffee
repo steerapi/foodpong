@@ -64,14 +64,21 @@ createNewUser = (username, email, password,cb)->
     #restaurants(data-role='page',data-add-back-btn="true",ng-controller="RestaurantsCtrl")
       include restaurants
 
+listRestaurants = (cb)->
+  restaurants = new Usergrid.Collection('restaurants')
+  restaurants.get ->
+    cb(restaurants)
+
+# Global Variable Scope
 IndexCtrl = ($scope)->
+  $scope.currentRestaurant = "xxx"
 
 FirstCtrl = ($scope)->
   $scope.username = ""
   $scope.isLoggedIn = ->
-    username = Usergrid.ApiClient.getLoggedInUser()
-    if username
-      $scope.username = username._data.username
+    user = Usergrid.ApiClient.getLoggedInUser()
+    if user
+      $scope.username = user.get "username"
       return true
     else
       return false
@@ -82,9 +89,40 @@ ConfirmCtrl = ($scope)->
 GraphsCtrl = ($scope)->
 ManageOrdersCtrl = ($scope)->
 ManageSubscriptionsCtrl = ($scope)->
+
 SettingsCtrl = ($scope)->
+  $scope.email = ""
+  $scope.update = ->
+    user = Usergrid.ApiClient.getLoggedInUser()
+    user.set("email", email)
+    user.save()
+
 OrdersCtrl = ($scope)->
+  $scope.checks = {}
+  $scope.total = 0
+  $scope.calculateTotal = ()->
+    total = 0
+    for k,v of $scope.checks
+      if v
+        total+=$scope.$parent.currentRestaurant.menu[k]
+    $scope.total = total
+
 RestaurantsCtrl = ($scope)->
+  $scope.restaurants = []
+  listRestaurants (restaurants)->
+    list = restaurants.getEntityList()
+    list.sort (e1,e2)->
+      a = e1.get("discountpercent")
+      b = e2.get("discountpercent")
+      return b-a
+    list.forEach (item)->
+      $scope.restaurants.push item.get()
+    # console.log $scope.restaurants
+    $scope.$apply()
+  $scope.startOrder = (restaurant)->
+    $scope.$parent.currentRestaurant = restaurant
+    console.log restaurant
+    $scope.$apply()
 
 LoginCtrl = ($scope)->
   $scope.username = ""
@@ -93,7 +131,7 @@ LoginCtrl = ($scope)->
     login $scope.username,$scope.password, (err, user)->
       if not err
         history.back()
-        localStorage.setItem "username", user._data.username
+        localStorage.setItem "username", user.get "username"
     
 SignupCtrl = ($scope)->
   $scope.username = ""
@@ -103,6 +141,6 @@ SignupCtrl = ($scope)->
     createNewUser $scope.username,$scope.email,$scope.password, (err, user)->
       if not err
         history.back()
-        localStorage.setItem "username", user._data.username
+        localStorage.setItem "username", user.get "username"
 
     

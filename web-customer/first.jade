@@ -16,11 +16,12 @@ div(data-role='content')
     | Eat Now
   a(href='#graphs', data-icon="star", data-role='button', data-theme='c')
     | Eat Later
-  a(href='#manageorders', data-icon="star", data-role='button', data-theme='c')
-    | Manage Orders
-  a(href='#managesubscriptions', data-icon="star", data-role='button', data-theme='c')
-    | Manage Subscriptions
-  a(href='#settings', data-icon="star", data-role='button', data-theme='c')
-    | Account Settings
+  div(ng-show="isLoggedIn()")
+    a(href='#manageorders', data-icon="star", data-role='button', data-theme='c')
+      | Manage Orders
+    a(href='#managesubscriptions', data-icon="star", data-role='button', data-theme='c')
+      | Manage Subscriptions
+    a(href='#settings', data-icon="star", data-role='button', data-theme='c')
+      | Account Settings
 //- div(data-role='footer')
 //-   h4 Food Pong
