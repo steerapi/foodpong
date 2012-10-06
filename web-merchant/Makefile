@@ -9,6 +9,8 @@ HTML = $(JADE:.jade=.html)
 
 all: $(HTML) $(CSS) $(JS)
 
+index.html: $(JADE)
+
 %.html: %.jade
 	jade -p . $<
 

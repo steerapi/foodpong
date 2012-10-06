@@ -1,0 +1,7 @@
+div(data-role='header')
+  h1 Signup
+div(data-role='content')
+  input(type='text', ng-model="username", name='username', value='',placeholder="Username")
+  input(type='email', ng-model="email", name='email', value='',placeholder="Email")
+  input(type='password', ng-model="password", name='password', value='',placeholder="Password")
+  a(data-role='button', ng-click="signup()") Signup

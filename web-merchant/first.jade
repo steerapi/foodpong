@@ -1,5 +1,5 @@
 div(data-role='header')
-  h1 Food Pong
+  h1 Food Pong for Restaurants
   //- a(href="index.html",data-role="button",data-theme="b")
   //-   | Signup
   //- a(href="index.html",data-role="button",data-theme="b")
@@ -12,16 +12,16 @@ div(data-role='content')
   div(ng-show="isLoggedIn()")
     h1 Welcome {{username}}
     a(data-role='button',data-theme="c", ng-click="logout()") Logout
-  a(href='#restaurants', data-icon="star", data-role='button', data-theme='c')
-    | Eat Now
-  a(href='#graphs', data-icon="star", data-role='button', data-theme='c')
-    | Eat Later
   div(ng-show="isLoggedIn()")
+    a(href='#flashsale', data-icon="star", data-role='button', data-theme='c')
+      | Flash Sale
+    a(href='#viewdemand', data-icon="star", data-role='button', data-theme='c')
+      | View Demand
     a(href='#manageorders', data-icon="star", data-role='button', data-theme='c')
       | Manage Orders
     a(href='#managesubscriptions', data-icon="star", data-role='button', data-theme='c')
       | Manage Subscriptions
     a(href='#settings', data-icon="star", data-role='button', data-theme='c')
-      | Account Settings
+      | Restaurant Information Settings
 //- div(data-role='footer')
 //-   h4 Food Pong

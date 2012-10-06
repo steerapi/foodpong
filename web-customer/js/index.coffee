@@ -1,5 +1,10 @@
 Usergrid.ApiClient.init('steerapi', 'sandbox');
 
+# Global variables
+FoodPong = {}
+FoodPong.promise = null
+FoodPong.timeleft = 0
+
 ###
 Function to handle the create new user form submission.
 
@@ -69,9 +74,70 @@ listRestaurants = (cb)->
   restaurants.get ->
     cb(restaurants)
 
+timeConverter = (UNIX_timestamp) ->
+  a = new Date(UNIX_timestamp)
+  months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  year = a.getFullYear()
+  month = months[a.getMonth()]
+  date = a.getDate()
+  hour = a.getHours()
+  min = a.getMinutes()
+  sec = a.getSeconds()
+  min = ("0" + min).slice(-2);
+  sec = ("0" + sec).slice(-2);
+  time = "#{min}:#{sec}"
+  time
+
+dateTimeConverter = (UNIX_timestamp) ->
+  a = new Date(UNIX_timestamp)
+  months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  year = a.getFullYear()
+  month = months[a.getMonth()]
+  date = a.getDate()
+  hour = a.getHours()
+  min = a.getMinutes()
+  sec = a.getSeconds()
+
+  hour = ("0" + hour).slice(-2);
+  min = ("0" + min).slice(-2);
+  sec = ("0" + sec).slice(-2);
+
+  time =  "#{month} #{date}, #{year} #{hour}:#{min}:#{sec}"
+  time
+
+randomUUID = ->
+  s = []
+  itoh = "0123456789ABCDEF"
+  
+  # Make array of random hex digits. The UUID only has 32 digits in it, but we
+  # allocate an extra items to make room for the '-'s we'll be inserting.
+  i = 0
+
+  while i < 36
+    s[i] = Math.floor(Math.random() * 0x10)
+    i++
+  
+  # Conform to RFC-4122, section 4.4
+  s[14] = 4 # Set 4 high bits of time_high field to version
+  s[19] = (s[19] & 0x3) | 0x8 # Specify 2 high bits of clock sequence
+  
+  # Convert to hex chars
+  i = 0
+
+  while i < 36
+    s[i] = itoh[s[i]]
+    i++
+  
+  # Insert '-'s
+  s[8] = s[13] = s[18] = s[23] = "-"
+  s.join ""
+  
 # Global Variable Scope
 IndexCtrl = ($scope)->
-  $scope.currentRestaurant = "xxx"
+  $scope.currentRestaurant = null
+  $scope.currentOrder = 0
+  $scope.currentOrderAvailable = false
+  $scope.timeleftStr = ""
 
 FirstCtrl = ($scope)->
   $scope.username = ""
@@ -86,6 +152,10 @@ FirstCtrl = ($scope)->
     logout()
 
 ConfirmCtrl = ($scope)->
+  $scope.subscribe = ->
+    #TODO
+    $scope.$parent.currentOrder
+
 GraphsCtrl = ($scope)->
 ManageOrdersCtrl = ($scope)->
 ManageSubscriptionsCtrl = ($scope)->
@@ -97,17 +167,47 @@ SettingsCtrl = ($scope)->
     user.set("email", email)
     user.save()
 
-OrdersCtrl = ($scope)->
+OrdersCtrl = ($scope,$timeout)->
   $scope.checks = {}
   $scope.total = 0
   $scope.calculateTotal = ()->
     total = 0
     for k,v of $scope.checks
       if v
-        total+=$scope.$parent.currentRestaurant.menu[k]
+        total+=$scope.$parent.currentRestaurant.get("menu")[k].price
     $scope.total = total
+  $scope.orderNow = ->
+    currentOrder = {}
+    #Generating unique order number
+    currentOrder.number = randomUUID()
+    currentOrder.time = new Date().getTime()
+    currentOrder.items = {}
+    for k,v of $scope.checks
+      if v
+        currentOrder.items[k] = $scope.$parent.currentRestaurant.get("menu")[k]
 
-RestaurantsCtrl = ($scope)->
+    #Store order in both restaurants and users
+    #Quick hack. TODO: Actually should create tables for users and subscribers...
+    orders = $scope.$parent.currentRestaurant.get("orders")
+    if not orders
+      $scope.$parent.currentRestaurant.set("orders", [currentOrder])
+    else
+      orders.push currentOrder
+    $scope.$parent.currentRestaurant.set "orders", orders
+
+    user = Usergrid.ApiClient.getLoggedInUser()
+    if user
+      orders = user.get("orders")
+      if not orders
+        user.set("orders", [orders])
+      else
+        orders.push currentOrder
+      user.set "orders", orders
+    
+    #TODO: Ping restaurants of the order via websocket + vertx + push apigee
+    $scope.$parent.currentOrder = currentOrder
+  
+RestaurantsCtrl = ($scope,$timeout)->
   $scope.restaurants = []
   listRestaurants (restaurants)->
     list = restaurants.getEntityList()
@@ -116,12 +216,29 @@ RestaurantsCtrl = ($scope)->
       b = e2.get("discountpercent")
       return b-a
     list.forEach (item)->
-      $scope.restaurants.push item.get()
+      $scope.restaurants.push item
     # console.log $scope.restaurants
     $scope.$apply()
   $scope.startOrder = (restaurant)->
     $scope.$parent.currentRestaurant = restaurant
-    console.log restaurant
+    $scope.$parent.currentOrderDateTime = dateTimeConverter((new Date()).getTime())
+    $scope.$parent.currentOrderAvailable = true
+    
+    FoodPong.timeleft = $scope.$parent.currentRestaurant.get("expiration") - (new Date()).getTime()
+    
+    $timeout.cancel(promise) if promise
+    promise = $timeout pulse=->
+      console.log FoodPong.timeleft
+      FoodPong.timeleft -= 1000
+      if FoodPong.timeleft < 0
+        $scope.$parent.currentOrderAvailable = false
+        $scope.$parent.timeleftStr = "Time's up!"
+        return
+      $scope.$parent.timeleftStr = timeConverter(FoodPong.timeleft)
+      # console.log $scope.$parent.timeleftStr 
+      $timeout pulse, 1000
+    , 1000
+    
     $scope.$apply()
 
 LoginCtrl = ($scope)->

@@ -3,7 +3,7 @@ div(data-role='header')
 div(data-role='content')
   ul(data-role='listview',data-filter="true")
     li(ng-repeat="restuarant in restaurants")
-      a(href='#orders', ng-click="startOrder(restuarant)") {{restuarant.name}}
+      a(href='#orders', ng-click="startOrder(restuarant)") {{restuarant.get("name")}} {{restuarant.get("discountpercent")}}% Off
 
-div(data-role='footer')
-  h4 Footer
+//- div(data-role='footer')
+//-   h4 Footer

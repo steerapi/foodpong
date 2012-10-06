@@ -1,19 +1,20 @@
 div(data-role='header')
   h1 Order
 div(data-role='content').center-wrapper
-  h1 {{currentRestaurant.name}}
-  | Time Left: {{timeleft}} Discount: {{discount}}
-  | {{time}} {{date}}
+  h1 {{currentRestaurant.get("name")}}
+  h1 Time Left: {{timeleftStr}} Discount: {{currentRestaurant.get("discountpercent")}}%
+  h2 Date Time: {{currentOrderDateTime}}
   div(data-role='fieldcontain')
     h1 Choose as many items as you'd like:
-    fieldset(data-role='controlgroup',ng-repeat="(name,price) in currentRestaurant.menu")
-      input(ng-change="calculateTotal()",id="checkbox{{$index}}",type='checkbox', ng-model="checks[name]")
+    fieldset(data-role='controlgroup',ng-repeat="items in currentRestaurant.get('menu')")
+      input(ng-change="calculateTotal()",id="checkbox{{$index}}",type='checkbox', ng-model="checks[$index]")
       label(for="checkbox{{$index}}")
-        | {{name}} ${{price}}
+        | {{items.type}} {{items.item}} ${{items.price.toFixed(2)}}
     fieldset(data-role='controlgroup')
-      a(data-role='button').ui-disabled.text-align-right ${{total}}
-  a(href="#confirm",data-role='button')
+      a(data-role='button').ui-disabled.text-align-right ${{total.toFixed(2)}}
+  a(href="#confirm",data-role='button', ng-click="orderNow()", ng-show="currentOrderAvailable")
     | Order Now
-
-div(data-role='footer')
-  h4 Footer
+  h1(ng-show="!currentOrderAvailable")
+    | Time's up!
+//- div(data-role='footer')
+//-   h4 Footer
