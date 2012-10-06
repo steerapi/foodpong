@@ -142,6 +142,46 @@ ConfirmCtrl = ($scope)->
     #TODO
     $scope.$parent.currentOrder
 
+PreOrders = (t) ->
+  
+  #  Return preorders(t) // from live data source
+  3
+BaseOrder = (time) ->
+  
+  # from POS system??
+  orders = undefined
+  if time < 6
+    orders = Math.random() * 10
+  else if time < 12
+    orders = Math.random() * 30 + 20
+  else if time < 16
+    orders = Math.random() * 15 + 15
+  else
+    orders = Math.random() * 5 + 5
+capacity = (time) ->
+  maxcap = 60
+  laborcap = 19
+  Math.min maxcap, labor(time) * laborcap
+labor = (time) ->
+  labor = undefined # someone is there if we're open
+  if time < 6
+    labor = 2
+  else if time < 12
+    labor = 4
+  else if time < 16
+    labor = 3
+  else
+    labor = 2
+Discount = (time) -> # to add weather, season
+  capthresh = .6
+  maxdiscord = Math.min(0, capthresh * capacity(time) - BaseOrder(time))
+  discinvrem = Math.min(0, maxdiscord - PreOrders(time))
+  discount_at = [0.2, 0.2, 0.2, 0.2, 0.2, 0.15, 0.15, 0.15, 0.15, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.1, 0.1, 0.1, 0.1, 0.25, 0.25, 0.25, 0.25, 0.15, 0.15, 0.15, 0.15]
+  discount = Math.min(discount_at[time], Math.max(0, discinvrem / maxdiscord * discount_at[time]))
+  discount
+
+#  return Math.random() * 10 + 10;
+
 GraphsCtrl = ($scope)->
   $scope.tab = "Hybrid View"
   fin = ->
@@ -167,7 +207,10 @@ GraphsCtrl = ($scope)->
     else
       $scope.plotT()
   $scope.plotR = ->
-    data1 = [[55, 20, 13, 32, 5, 1, 2, 10]]
+    data1=[[]]
+    for i in [0..29]
+      p = Math.random()*50
+      data1[0].push p.toFixed(2)
     r.clear()
     c=r.barchart(10, 10, 300, 220, data1,
       type: "soft"
@@ -175,7 +218,10 @@ GraphsCtrl = ($scope)->
     c.hover fin, fout
     c.click fclick
   $scope.plotT = ->
-    data1 = [[55, 20, 13, 32, 5, 1, 2, 10]]
+    data1=[[]]
+    for i in [0..29]
+      p = Math.random()*50
+      data1[0].push p.toFixed(2)
     r.clear()
     c=r.barchart(10, 10, 300, 220, data1,
       type: "soft"
@@ -183,7 +229,10 @@ GraphsCtrl = ($scope)->
     c.hover fin, fout
     c.click fclick
   $scope.plotH = ->
-    data1 = [[55, 20, 13, 32, 5, 1, 2, 10]]
+    data1=[[]]
+    for i in [0..29]
+      p = Math.random()*50
+      data1[0].push p.toFixed(2)
     r.clear()
     c=r.barchart(10, 10, 300, 220, data1,
       type: "soft"

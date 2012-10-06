@@ -5,6 +5,10 @@ FoodPong = {}
 FoodPong.promise = null
 FoodPong.timeleft = 0
 
+# Init Raphael
+r = Raphael("holder")
+rManage = Raphael("manageHolder")
+
 ###
 Function to handle the create new user form submission.
 
@@ -138,8 +142,42 @@ ConfirmPerkCtrl = ($scope)->
 
 ConfirmDiscountCtrl = ($scope)->
 
-GraphsCtrl = ($scope)->
 ManageOrdersCtrl = ($scope)->
+
+  $scope.plotManage = -> 
+    data1 = [[15, 20, 33, 32, 15, 1, 22, 14]]
+    index = 0
+    prevy = 0
+    lock = false
+    fclick = (e) ->
+      x = e.srcElement.getBBox().x
+      prevy = e.y
+      index = parseInt(x/36)
+      lock = !lock
+    x = (e)->
+      # console.log("move",e.x)
+      data1[0][index] -= e.y-prevy
+      chart2 = r.barchart(10, 10, 300, 220, data1)
+      $.each chart.bars[0], (k, v) ->
+        # console.log v
+        # console.log [k, v, v.value[0]]
+        newpath = chart2.bars[0][k].attr("path")
+        v.animate
+          path: newpath
+        , 1000
+        v.value = data1[0][k]
+      chart2.remove()
+    newx = _.throttle(x,100)
+    fmousemove = (e) ->
+      if lock
+        newx(e)
+
+    rManage.clear()
+    chart=rManage.barchart(10, 10, 300, 220, data1)
+    chart.mousemove(fmousemove);
+    chart.click(fclick);
+  $scope.plotManage()
+
 ManageSubscriptionsCtrl = ($scope)->
 
 SettingsCtrl = ($scope)->
@@ -150,6 +188,12 @@ SettingsCtrl = ($scope)->
     user.save()
 
 ViewDemandCtrl = ($scope)->
+  $scope.plotDemand = -> 
+    data1 = [[15, 20, 33, 32, 15, 1, 22, 14]]
+    r.clear()
+    c=r.barchart(10, 10, 300, 220, data1)
+  $scope.plotDemand()
+
 FlashSaleCtrl = ($scope)->
 NowLaterCtrl = ($scope)->
 SelectItemCtrl = ($scope)->

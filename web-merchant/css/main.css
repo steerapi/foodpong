@@ -53,3 +53,8 @@
 .text-align-left {
   text-align: left;
 }
+#holder,
+#manageHolder {
+  width: 300px;
+  height: 220px;
+}
