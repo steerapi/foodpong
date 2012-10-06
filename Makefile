@@ -5,6 +5,9 @@ all: app.js static_data.js
 %.js: %.coffee
 	coffee -cb $<
 
+deploy:
+	./scripts/deploy.sh
+
 watch:
 	watch -n 1 make
 
