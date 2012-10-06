@@ -156,7 +156,7 @@ ManageOrdersCtrl = ($scope)->
       lock = !lock
     x = (e)->
       # console.log("move",e.x)
-      data1[0][index] -= e.y-prevy
+      data1[0][index] += e.y-prevy
       chart2 = r.barchart(10, 10, 300, 220, data1)
       $.each chart.bars[0], (k, v) ->
         # console.log v
@@ -189,9 +189,13 @@ SettingsCtrl = ($scope)->
 
 ViewDemandCtrl = ($scope)->
   $scope.plotDemand = -> 
-    data1 = [[15, 20, 33, 32, 15, 1, 22, 14]]
+  
+    data1 = [[]]
+    for i in [0..29]
+      p = Math.random()*50
+      data1[0].push p
     r.clear()
-    c=r.barchart(10, 10, 300, 220, data1)
+    c=r.linechart(10, 10, 300, 220, [0..29], data1)
   $scope.plotDemand()
 
 FlashSaleCtrl = ($scope)->

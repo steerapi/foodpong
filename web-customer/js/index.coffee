@@ -218,10 +218,13 @@ GraphsCtrl = ($scope)->
     c.hover fin, fout
     c.click fclick
   $scope.plotT = ->
-    data1=[[]]
+    data1=[[],[]]
     for i in [0..29]
       p = Math.random()*50
       data1[0].push p.toFixed(2)
+      p = Math.random()*50
+      data1[1].push p.toFixed(2)
+
     r.clear()
     c=r.barchart(10, 10, 300, 220, data1,
       type: "soft"

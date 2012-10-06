@@ -162,7 +162,7 @@ ManageOrdersCtrl = function($scope) {
     };
     x = function(e) {
       var chart2;
-      data1[0][index] -= e.y - prevy;
+      data1[0][index] += e.y - prevy;
       chart2 = r.barchart(10, 10, 300, 220, data1);
       $.each(chart.bars[0], function(k, v) {
         var newpath;
@@ -202,10 +202,18 @@ SettingsCtrl = function($scope) {
 
 ViewDemandCtrl = function($scope) {
   $scope.plotDemand = function() {
-    var c, data1;
-    data1 = [[15, 20, 33, 32, 15, 1, 22, 14]];
+    var c, data1, i, p, _i, _j, _results;
+    data1 = [[]];
+    for (i = _i = 0; _i <= 29; i = ++_i) {
+      p = Math.random() * 50;
+      data1[0].push(p);
+    }
     r.clear();
-    return c = r.barchart(10, 10, 300, 220, data1);
+    return c = r.linechart(10, 10, 300, 220, (function() {
+      _results = [];
+      for (_j = 0; _j <= 29; _j++){ _results.push(_j); }
+      return _results;
+    }).apply(this), data1);
   };
   return $scope.plotDemand();
 };
