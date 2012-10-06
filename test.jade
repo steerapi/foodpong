@@ -1,0 +1,87 @@
+!!! 5
+html
+head
+    title T
+    script(src='raphael-min.js', type='text/javascript', charset='utf-8')
+    script(src='g.raphael.js', type='text/javascript', charset='utf-8')
+    script(src='g.bar.js', type='text/javascript', charset='utf-8')
+    script(src='g.line.js', type='text/javascript', charset='utf-8')
+    script(type='text/javascript', charset='utf-8')
+      window.onload = function () {
+      var r = Raphael("holder");
+      var t_granularity = 0.25; // quarter hour
+      // depend on restaurant
+      var t_open = 10.00;
+      var t_close = 22.00;
+      var demand = [];
+      var x = [];
+      demand[-1] = 20;
+      for (var t = t_open, i = 0; t <= t_close; t += t_granularity, i++) {
+      demand[i] = demand[i-1] + (Math.random() * 10 - 5); // +/- 5 units per time interval
+      if (demand < 0)
+      demand = 0;
+      x[i] = t;
+      }
+      r.linechart(10, 10, 320, 240, x, [demand]);
+      var fin = function () {
+      this.flag = r.popup(this.bar.x, this.bar.y, this.bar.value || "0").insertBefore(this);
+      },
+      fout = function () {
+      this.flag.animate({opacity: 0}, 300, function () {this.remove();});
+      };
+      //                  col = ['aqua','teal','navy'],
+      //                g.colors = ['rgb(255,0,0)','rgb(0,255,0)','rgb(0,0,255)'];
+      var data1 = [[55, 20, 13, 32, 5, 1, 2, 10], [10, 2, 1, 5, 32, 13, 20, 55]];
+      if (false) {
+      var best_discount = [];
+      var best_rest = [];
+      var n_rest = data1.length;
+      var n_times = data1[0].length; // assumes each restaurant has a discount (could be 0) for each time
+      for (var i = 0; i < n_times; i++)
+      {
+      // compare each restaurant's deals at each time
+      best_discount[i] = 0;
+      for (var ri = 0; ri < n_rest; ri++)
+      {
+      var this_discount = data1[ri][i];
+      if (this_discount > best_discount[i])
+      {
+      best_discount[i] = this_discount;
+      best_rest[i] = ri;
+      }
+      }
+      }
+      var b = r.barchart(10, 10, 300, 220, [best_discount], {type: "soft"}).hover(fin, fout);
+      var colors = ["rgb(255,0,0)","rgb(0,255,0)","rgb(0,0,255)"];
+      // touch up colors to indicate which restaurant has this killer deal
+      for (var i = 0; i < n_times; i++)
+      {
+      b.bars[i].attr({fill : colors[best_rest[i]]});
+      }
+      } else {
+      // neither of these are exactly what we need...
+      r.barchart(10, 10, 300, 220, data1, {type: "soft"}).hover(fin, fout);
+      r.barchart(310, 10, 300, 220, data1, {type: "soft", stacked: "true"}).hover(fin, fout);
+      //                r.barchart(10, 10, 300, 220, [[55, 20, 13, 32, 5, 1, 2, 10]], 0).hover(fin, fout);
+      //                r.barchart(10, 10, 300, 220, data1, 0, {type: "soft", colors:col}).hover(fin, fout);
+      //                r.barchart(10, 10, 300, 220, data1, 0, {type: "soft"}).hover(fin, fout);
+      }
+      // ---------------------
+      /*                var t_granularity = 0.25; // quarter hour
+      // depend on restaurant
+      var t_open = 10.00;
+      var t_close = 22.00;
+      var demand = [];
+      var x = [];
+      demand[-1] = 20;
+      for (var t = t_open, i = 0; t <= t_close; t += t_granularity, i++) {
+      demand[i] = demand[i-1] + (Math.random() * 10 - 5); // +/- 5 units per time interval
+      if (demand < 0)
+      demand = 0;
+      x[i] = t;
+      }
+      r.linechart(10, 230, 300, 220, x, [demand],{});*/
+      // ---------------------
+      };
+  body.raphael
+    #holder

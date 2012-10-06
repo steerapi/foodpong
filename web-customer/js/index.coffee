@@ -5,6 +5,9 @@ FoodPong = {}
 FoodPong.promise = null
 FoodPong.timeleft = 0
 
+# Init Raphael
+r = Raphael("holder")
+
 ###
 Function to handle the create new user form submission.
 
@@ -140,6 +143,55 @@ ConfirmCtrl = ($scope)->
     $scope.$parent.currentOrder
 
 GraphsCtrl = ($scope)->
+  $scope.tab = "Hybrid View"
+  fin = ->
+    @flag = r.popup(@bar.x, @bar.y, (@bar.value or "0")+"%").insertBefore(this)
+  fout = ->
+    @flag.animate
+      opacity: 0
+    , 300, ->
+      @remove()
+
+  fclick = (e)->
+    x = e.srcElement.getBBox().x
+    i = parseInt(x/36)
+    console.log i
+    #We now know restaurant index
+
+  $scope.select = (tab)->
+    $scope.tab = tab
+    if tab=="Hybrid View"
+      $scope.plotH()
+    else if tab=="Restaurant View"
+      $scope.plotR()
+    else
+      $scope.plotT()
+  $scope.plotR = ->
+    data1 = [[55, 20, 13, 32, 5, 1, 2, 10]]
+    r.clear()
+    c=r.barchart(10, 10, 300, 220, data1,
+      type: "soft"
+    )
+    c.hover fin, fout
+    c.click fclick
+  $scope.plotT = ->
+    data1 = [[55, 20, 13, 32, 5, 1, 2, 10]]
+    r.clear()
+    c=r.barchart(10, 10, 300, 220, data1,
+      type: "soft"
+    )
+    c.hover fin, fout
+    c.click fclick
+  $scope.plotH = ->
+    data1 = [[55, 20, 13, 32, 5, 1, 2, 10]]
+    r.clear()
+    c=r.barchart(10, 10, 300, 220, data1,
+      type: "soft"
+    )
+    c.hover fin, fout
+    c.click fclick
+  $scope.plotH()
+
 ManageOrdersCtrl = ($scope)->
 ManageSubscriptionsCtrl = ($scope)->
 

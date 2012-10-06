@@ -1,0 +1,10 @@
+div(data-role='header')
+  h1 Select Time and Restaurant
+div(data-role='content')
+  div(data-role='controlgroup', data-type="horizontal").center-wrapper
+    a(data-role='button',data-theme="c",ng-click="select('Hybrid View')") Hybrid
+    a(data-role='button',data-theme="c",ng-click="select('Restaurant View')") Restaurant
+    a(data-role='button',data-theme="c",ng-click="select('Discount View')") Discount
+  div.center-wrapper
+    h1 {{tab}}
+    #holder

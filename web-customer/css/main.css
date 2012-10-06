@@ -1,3 +1,79 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: inherit;
+  font-weight: bold;
+  color: inherit;
+  padding-bottom: 5px;
+  text-rendering: optimizelegibility;
+}
+h1 small,
+h2 small,
+h3 small,
+h4 small,
+h5 small,
+h6 small {
+  font-weight: normal;
+  color: #999;
+}
+h1 {
+  font-size: 20px;
+  line-height: 20px;
+  padding-top: 5px;
+}
+h1 small {
+  font-size: 18px;
+}
+h2 {
+  font-size: 18px;
+  line-height: 18px;
+}
+h2 small {
+  font-size: 18px;
+}
+h3 {
+  font-size: 18px;
+  line-height: 27px;
+}
+h3 small {
+  font-size: 14px;
+}
+h4,
+h5,
+h6 {
+  line-height: 18px;
+}
+h4 {
+  font-size: 14px;
+}
+h4 small {
+  font-size: 12px;
+}
+h5 {
+  font-size: 12px;
+}
+h6 {
+  font-size: 11px;
+  color: #999;
+  text-transform: uppercase;
+}
+.page-header {
+  padding-bottom: 17px;
+  margin: 18px 0;
+  border-bottom: 1px solid #eee;
+}
+.page-header h1 {
+  line-height: 1;
+}
+.eat-image {
+  width: 75%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
 @media all {
   .panel {
     overflow: hidden;
@@ -54,8 +130,12 @@
   text-align: left;
 }
 .eatnow {
-  background-image: url("../images/eatnowsm.jpg") !important;
+  background-image: url("../images/eatnowsm.png") !important;
 }
 .eatlater {
-  background-image: url("../images/eatlatersm.jpg") !important;
+  background-image: url("../images/eatlatersm.png") !important;
+}
+#holder {
+  width: 300px;
+  height: 220px;
 }

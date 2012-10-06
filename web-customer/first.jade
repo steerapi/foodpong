@@ -9,13 +9,15 @@ div(data-role='content')
   div(data-role='controlgroup', data-type="horizontal", ng-show="!isLoggedIn()").center-wrapper
     a(href='#signup', data-role='button',data-theme="c",data-rel="dialog",data-transition="pop") Signup
     a(href='#login', data-role='button',data-theme="c",data-rel="dialog",data-transition="pop") Login
-  div(ng-show="isLoggedIn()")
+  div(ng-show="isLoggedIn()").center-wrapper
     h1 Welcome {{username}}
-    a(data-role='button',data-theme="c", ng-click="logout()") Logout
-  img(href='#restaurants', src="images/eatnowsm.jpg").center-wrapper
-    | Eat Now
-  img(href='#restaurants', src="images/eatlatersm.jpg").center-wrapper
-    | Eat Later
+    a(data-role='button',data-theme="c", ng-click="logout()", data-inline="true") Logout
+  div.center-wrapper
+    a(href="#restaurants",data-theme="")
+      img(src="images/eatnowsm.png", ng-click="window.location='#restaurants'")
+  div.center-wrapper
+    a(href="#graphs",data-theme="")
+      img(src="images/eatlatersm.png", ng-click="$.mobile.changePage('#graphs')")
   div(ng-show="isLoggedIn()")
     a(href='#manageorders', data-icon="star", data-role='button', data-theme='c')
       | Manage Orders
