@@ -1,0 +1,20 @@
+div(data-role='header')
+  h1 Order
+div(data-role='content')
+  | Time Left: Discount: 
+  | Time Date
+  div(data-role='fieldcontain')
+    fieldset(data-role='controlgroup')
+      legend Choose as many items as you'd like:
+      input#checkbox-1(type='checkbox', name='checkbox-1')
+      label(for='checkbox-1') Item 1
+      input#checkbox-2(type='checkbox', name='checkbox-2')
+      label(for='checkbox-2') Item 2
+    fieldset(data-role='controlgroup')
+      legend Total
+      a(data-role='button').ui-disabled.text-align-right 20
+  a(href="#confirm",data-role='button')
+    | Order Now
+
+div(data-role='footer')
+  h4 Footer

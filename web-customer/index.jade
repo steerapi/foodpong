@@ -1,76 +1,58 @@
 !!! 5
-html
+html(ng-app)
   head
-    title my webapp
+    title Food Pong
     meta(name='apple-mobile-web-app-capable', content='yes')
     meta(name='viewport', content='user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0;')
     meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    
+    link(rel='stylesheet', href='css/reset.css')
+    link(rel='stylesheet',href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css")
     link(rel='stylesheet', href='css/main.css')
     link(rel='apple-touch-icon', href='icon.png')
+    
     // twitter bootstrap stylesheet 
-    link(rel='stylesheet', href='http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css')
+    //- link(rel='stylesheet', href='http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css')
     // we need jQuery 
-    script(src='http://code.jquery.com/jquery-1.7.1.min.js')
+    //- script(src="http://code.jquery.com/jquery-1.7.1.min.js")
+    //- script(src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js")
+    script(src="http://code.jquery.com/jquery-1.8.2.min.js")
+    script(src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js")
     // we need tabs javascript plugin of twitter bootstrap 
-    script(src='http://twitter.github.com/bootstrap/1.4.0/bootstrap-tabs.js')
-  body
-    // MAIN PANEL 
-    .panel
-      //
-         panel style is a twitter bootstrap style 
-      //
-         TOP BAR 
-      .topbar
-        .topbar-inner
-          .container-fluid
-            a.brand(href='#') WebAPP
-            ul.nav
-              li
-                a(href='#') Hello
-              li
-                a(href='#') World
-      // SCROLLABLE PANEL 
-      .scrollable.panel
-        // CONTENT 
-        .content.insideScrollablePanel
-          ul.tabs(data-tabs='tabs')
-            li.active
-              a(href='#home') Home
-            li
-              a(href='#message') Message
-          #my-tab-content.tab-content
-            #home.tab-pane.active
-              .hero-unit
-                h1 Hello, world!
-                p
-                  | Vestibulum id ligula porta felis euismod semper.
-                  | Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
-                  | Duis mollis, est non commodo luctus, nisi erat porttitor ligula,
-                  | eget lacinia odio sem nec elit.
-                p
-                  a.btn.primary.large Learn more »
-            #message.tab-pane
-              .span5
-                h2 Heading
-                p
-                  | Donec id elit non mi porta gravida at eget metus.
-                  | Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-                  | ut fermentum massa justo sit amet risus.
-                  | Etiam porta sem malesuada magna mollis euismod.
-                  | Donec sed odio dui.
-                p
-                  a.btn(href='#') View details »
-              .span5
-                h2 Heading
-                p
-                  | Donec id elit non mi porta gravida at eget metus.
-                  | Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
-                  | ut fermentum massa justo sit amet risus.
-                  | Etiam porta sem malesuada magna mollis euismod.
-                  | Donec sed odio dui.
-                p
-                  a.btn(href='#') View details »
-          footer
-            p I'm the footer
-  script(src="js/index.js")
+    // script(src='http://twitter.github.com/bootstrap/1.4.0/bootstrap-tabs.js')
 
+    script(src='js/raphael.js')
+    script(src='http://g.raphaeljs.com/g.raphael.js')
+    script(src='http://g.raphaeljs.com/g.bar.js')
+    script(src='http://g.raphaeljs.com/g.line.js')
+
+    script(src='http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js')
+
+    script(src="js/usergrid.appSDK.js")
+
+    script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js")
+    script(src="js/jquery-mobile-angular-adapter-1.1.1.js")
+
+  body
+    #first(data-role='page',data-add-back-btn="true",ng-controller="FirstCtrl")
+      include first
+    #confirm(data-role='page',data-add-back-btn="true",ng-controller="ConfirmCtrl")
+      include confirm
+    #graphs(data-role='page',data-add-back-btn="true",ng-controller="GraphsCtrl")
+      include graphs
+    #manageorders(data-role='page',data-add-back-btn="true",ng-controller="ManageOrdersCtrl")
+      include manageorders
+    #managesubscriptions(data-role='page',data-add-back-btn="true",ng-controller="ManageSubscriptionsCtrl")
+      include managesubscriptions
+    #settings(data-role='page',data-add-back-btn="true",ng-controller="SettingsCtrl")
+      include settings
+    #orders(data-role='page',data-add-back-btn="true",ng-controller="OrdersCtrl")
+      include orders
+    #restaurants(data-role='page',data-add-back-btn="true",ng-controller="RestaurantsCtrl")
+      include restaurants
+    #login(data-role='page',data-add-back-btn="true",ng-controller="LoginCtrl")
+      include login
+    #signup(data-role='page',data-add-back-btn="true",ng-controller="SignupCtrl")
+      include signup
+
+  script(src="js/index.js")
