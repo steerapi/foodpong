@@ -1,0 +1,11 @@
+div(data-role='header')
+  h1 Select Item
+div(data-role='content')
+  div(data-role='fieldcontain')
+    h1 Choose perk
+    fieldset(data-role='controlgroup',ng-repeat="items in currentRestaurant.get('menu')")
+      input(ng-change="calculateTotal()",id="checkbox{{$index}}",type='checkbox', ng-model="checks[$index]")
+      label(for="checkbox{{$index}}")
+        | {{items.type}} {{items.item}} ${{items.price.toFixed(2)}}
+  a(href="#confirm",data-role='button', ng-click="orderNow()")
+    | Select

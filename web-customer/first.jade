@@ -12,9 +12,9 @@ div(data-role='content')
   div(ng-show="isLoggedIn()")
     h1 Welcome {{username}}
     a(data-role='button',data-theme="c", ng-click="logout()") Logout
-  a(href='#restaurants', data-icon="star", data-role='button', data-theme='c')
+  img(href='#restaurants', src="images/eatnowsm.jpg").center-wrapper
     | Eat Now
-  a(href='#graphs', data-icon="star", data-role='button', data-theme='c')
+  img(href='#restaurants', src="images/eatlatersm.jpg").center-wrapper
     | Eat Later
   div(ng-show="isLoggedIn()")
     a(href='#manageorders', data-icon="star", data-role='button', data-theme='c')

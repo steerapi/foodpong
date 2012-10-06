@@ -52,23 +52,6 @@ createNewUser = (username, email, password,cb)->
       #error create
   else
 
-    #first(data-role='page',data-add-back-btn="true",ng-controller="FirstCtrl")
-      include first
-    #confirm(data-role='page',data-add-back-btn="true",ng-controller="ConfirmCtrl")
-      include confirm
-    #graphs(data-role='page',data-add-back-btn="true",ng-controller="GraphsCtrl")
-      include graphs
-    #manageorders(data-role='page',data-add-back-btn="true",ng-controller="ManageOrdersCtrl")
-      include manageorders
-    #managesubscriptions(data-role='page',data-add-back-btn="true",ng-controller="ManageSubscriptionsCtrl")
-      include managesubscriptions
-    #settings(data-role='page',data-add-back-btn="true",ng-controller="SettingsCtrl")
-      include settings
-    #orders(data-role='page',data-add-back-btn="true",ng-controller="OrdersCtrl")
-      include orders
-    #restaurants(data-role='page',data-add-back-btn="true",ng-controller="RestaurantsCtrl")
-      include restaurants
-
 listRestaurants = (cb)->
   restaurants = new Usergrid.Collection('restaurants')
   restaurants.get ->
@@ -151,9 +134,10 @@ FirstCtrl = ($scope)->
   $scope.logout = ->
     logout()
 
-ConfirmCtrl = ($scope)->
-  $scope.subscribe = ->
-    $scope.$parent.currentOrder
+ConfirmPerkCtrl = ($scope)->
+
+ConfirmDiscountCtrl = ($scope)->
+
 GraphsCtrl = ($scope)->
 ManageOrdersCtrl = ($scope)->
 ManageSubscriptionsCtrl = ($scope)->
@@ -168,6 +152,7 @@ SettingsCtrl = ($scope)->
 ViewDemandCtrl = ($scope)->
 FlashSaleCtrl = ($scope)->
 NowLaterCtrl = ($scope)->
+SelectItemCtrl = ($scope)->
 SelectionCtrl = ($scope)->
   $("#buying_slider_min").change ->
     min = parseInt($(this).val())

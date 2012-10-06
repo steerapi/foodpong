@@ -10,6 +10,7 @@ html(ng-app)
     link(rel='stylesheet',href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css")
     link(rel='stylesheet', href='css/main.css')
     link(rel='apple-touch-icon', href='icon.png')
+    link(rel='stylesheet', type='text/css', href='http://dev.jtsage.com/cdn/datebox/latest/jqm-datebox.min.css')
     
     // twitter bootstrap stylesheet 
     //- link(rel='stylesheet', href='http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css')
@@ -33,7 +34,6 @@ html(ng-app)
     script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.2/angular.min.js")
     script(src="js/jquery-mobile-angular-adapter-1.1.1.js")
 
-    link(rel='stylesheet', type='text/css', href='http://dev.jtsage.com/cdn/datebox/latest/jqm-datebox.min.css')
     script(type='text/javascript', src='http://dev.jtsage.com/cdn/datebox/latest/jqm-datebox.core.min.js')
     script(type='text/javascript', src='http://dev.jtsage.com/cdn/datebox/latest/jqm-datebox.mode.calbox.min.js')
     script(type='text/javascript', src='http://dev.jtsage.com/cdn/datebox/i18n/jquery.mobile.datebox.i18n.en_US.utf8.js')
@@ -49,6 +49,8 @@ html(ng-app)
       include nowlater
     #selection(data-role='page',data-add-back-btn="true",ng-controller="SelectionCtrl")
       include selection
+    #selectitem(data-role='page',data-add-back-btn="true",ng-controller="SelectItemCtrl")
+      include selectitem
     #perk(data-role='page',data-add-back-btn="true",ng-controller="PerkCtrl")
       include perk
     #discount(data-role='page',data-add-back-btn="true",ng-controller="DiscountCtrl")
@@ -65,5 +67,9 @@ html(ng-app)
       include login
     #signup(data-role='page',data-add-back-btn="true",ng-controller="SignupCtrl")
       include signup
+    #confirmperk(data-role='page',data-add-back-btn="true",ng-controller="ConfirmPerkCtrl")
+      include confirmperk
+    #confirmdiscount(data-role='page',data-add-back-btn="true",ng-controller="ConfirmDiscountCtrl")
+      include confirmdiscount
 
   script(src="js/index.js")

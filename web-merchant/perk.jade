@@ -1,10 +1,13 @@
 div(data-role='header')
   h1 Perk
 div(data-role='content')
-  h1 a free 
-  a(href='#perkdiscount', data-icon="star", data-role='button', data-theme='c')
-    | Now
-  a(href='#selection', data-icon="star", data-role='button', data-theme='c')
-    | Later
-//- div(data-role='footer')
-//-   h4 Food Pong
+  a(href='#selectitem', data-icon="star", data-role='button', data-theme='c')
+    | Select Item
+  h1 Buy
+  input(type="range",value="1",min="0",max="100")
+  h1 Get
+  input(type="range",value="1",min="0",max="100")  
+  h1 Free
+
+  a(href="#confirmperk",data-icon="star", data-role='button', data-theme='c', ng-click="")
+    | Select this perk

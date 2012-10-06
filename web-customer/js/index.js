@@ -49,14 +49,7 @@ createNewUser = function(username, email, password, cb) {
       return login(username, password, cb);
     }), function() {});
   } else {
-    include(first);
-    include(confirm);
-    include(graphs);
-    include(manageorders);
-    include(managesubscriptions);
-    include(settings);
-    include(orders);
-    return include(restaurants);
+
   }
 };
 
