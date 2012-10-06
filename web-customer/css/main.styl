@@ -1,0 +1,35 @@
+@media all
+  .panel
+    overflow: hidden
+    position: absolute
+    display: block
+    width: 100%
+    padding-top: 60px
+    padding-bottom: 60px
+    top: 0
+
+  .scrollable
+    overflow: scroll
+    -webkit-overflow-scrolling: touch
+
+  .insideScrollablePanel
+    margin-left: 5%
+    margin-right: 5%
+    width: 90%
+
+@media (device-width: 768px) and (orientation: portrait)
+  .panel
+    height: 934px
+
+@media (device-width: 768px) and (orientation: landscape)
+  .panel
+    height: 668px
+
+@media (max-width: 480px) and (orientation: portrait)
+  .panel
+    height: 380px
+
+@media (max-width: 480px) and (orientation: landscape)
+  .panel
+    height: 220px
+

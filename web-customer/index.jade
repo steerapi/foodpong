@@ -1,0 +1,76 @@
+!!! 5
+html
+  head
+    title my webapp
+    meta(name='apple-mobile-web-app-capable', content='yes')
+    meta(name='viewport', content='user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0;')
+    meta(http-equiv='Content-Type', content='text/html; charset=UTF-8')
+    link(rel='stylesheet', href='css/main.css')
+    link(rel='apple-touch-icon', href='icon.png')
+    // twitter bootstrap stylesheet 
+    link(rel='stylesheet', href='http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css')
+    // we need jQuery 
+    script(src='http://code.jquery.com/jquery-1.7.1.min.js')
+    // we need tabs javascript plugin of twitter bootstrap 
+    script(src='http://twitter.github.com/bootstrap/1.4.0/bootstrap-tabs.js')
+  body
+    // MAIN PANEL 
+    .panel
+      //
+         panel style is a twitter bootstrap style 
+      //
+         TOP BAR 
+      .topbar
+        .topbar-inner
+          .container-fluid
+            a.brand(href='#') WebAPP
+            ul.nav
+              li
+                a(href='#') Hello
+              li
+                a(href='#') World
+      // SCROLLABLE PANEL 
+      .scrollable.panel
+        // CONTENT 
+        .content.insideScrollablePanel
+          ul.tabs(data-tabs='tabs')
+            li.active
+              a(href='#home') Home
+            li
+              a(href='#message') Message
+          #my-tab-content.tab-content
+            #home.tab-pane.active
+              .hero-unit
+                h1 Hello, world!
+                p
+                  | Vestibulum id ligula porta felis euismod semper.
+                  | Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
+                  | Duis mollis, est non commodo luctus, nisi erat porttitor ligula,
+                  | eget lacinia odio sem nec elit.
+                p
+                  a.btn.primary.large Learn more »
+            #message.tab-pane
+              .span5
+                h2 Heading
+                p
+                  | Donec id elit non mi porta gravida at eget metus.
+                  | Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
+                  | ut fermentum massa justo sit amet risus.
+                  | Etiam porta sem malesuada magna mollis euismod.
+                  | Donec sed odio dui.
+                p
+                  a.btn(href='#') View details »
+              .span5
+                h2 Heading
+                p
+                  | Donec id elit non mi porta gravida at eget metus.
+                  | Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
+                  | ut fermentum massa justo sit amet risus.
+                  | Etiam porta sem malesuada magna mollis euismod.
+                  | Donec sed odio dui.
+                p
+                  a.btn(href='#') View details »
+          footer
+            p I'm the footer
+  script(src="js/index.js")
+
